@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EIRA — Toko Tas Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======= HEADER ======= -->
+  <header class="header">
+    <div class="logo-wrap">
+      <div class="logo-mark">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 9 Q5 5 8 5 L18 5 Q21 5 21 9 L21 20 Q21 22 19 22 L7 22 Q5 22 5 20 Z" fill="none" stroke="#c8a96e" stroke-width="1.5"/>
+          <path d="M9 9 Q9 3 13 3 Q17 3 17 9" stroke="#c8a96e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <text x="13" y="17" text-anchor="middle" font-size="7" fill="#c8a96e" font-family="Georgia,serif" font-style="italic" letter-spacing="1">eira</text>
+        </svg>
+      </div>
+      <div class="logo-text-wrap">
+        <div class="logo-main">Eira</div>
+        <div class="logo-sub">Bag Store</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="cart-btn" onclick="openCartDrawer()">
+        🛒 Keranjang
+        <span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ======= HERO SLIDER ======= -->
+  <div class="hero" id="hero">
+    <div class="hero-slides" id="hero-slides">
+      <!-- Slide 1 -->
+      <div class="hero-slide">
+        <div class="slide-bg">
+          <div class="slide-model" style="font-size:180px;padding-right:40px;">👜</div>
+        </div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-tag">Koleksi Terbaru</span>
+          <h1 class="slide-title">Style Yang<br>Tak Lekang<br>Waktu</h1>
+          <p class="slide-desc">Tas premium untuk wanita modern yang percaya diri dan elegan di setiap momen.</p>
+          <button class="slide-cta" onclick="showCategory('all');setTimeout(()=>document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'}),50)">Lihat Koleksi →</button>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="hero-slide" style="background:#111;">
+        <div class="slide-bg">
+          <div class="slide-model" style="font-size:180px;padding-right:40px;">🎒</div>
+        </div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-tag">Promo Spesial</span>
+          <h1 class="slide-title">Diskon<br>Hingga<br>30% OFF</h1>
+          <p class="slide-desc">Dapatkan tas impianmu dengan harga terbaik. Penawaran terbatas, jangan sampai kehabisan!</p>
+          <button class="slide-cta" onclick="showCategory('diskon');setTimeout(()=>document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'}),50)">Lihat Diskon →</button>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="hero-slide" style="background:#0d0d0d;">
+        <div class="slide-bg">
+          <div class="slide-model" style="font-size:180px;padding-right:40px;">👝</div>
+        </div>
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <span class="slide-tag">Eksklusif Eira</span>
+          <h1 class="slide-title">Elegansi<br>di Setiap<br>Detail</h1>
+          <p class="slide-desc">Dari slingbag minimalis hingga handbag mewah — temukan koleksi yang sempurna untukmu.</p>
+          <button class="slide-cta" onclick="showCategory('handbag');setTimeout(()=>document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'}),50)">Lihat Handbag →</button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-dots" id="hero-dots"></div>
+    <button class="hero-arrow prev" onclick="slideHero(-1)">‹</button>
+    <button class="hero-arrow next" onclick="slideHero(1)">›</button>
+  </div>
+
+  <!-- ======= NAV TABS ======= -->
+  <div class="nav-bar" id="nav-bar">
+    <div class="tab active" data-cat="all" onclick="showCategory('all',this);document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'})">✦ Semua</div>
+    <div class="tab" data-cat="diskon" onclick="showCategory('diskon',this);document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'})">🔥 Diskon</div>
+    <div class="tab" data-cat="slingbag" onclick="showCategory('slingbag',this);document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'})">👜 Slingbag</div>
+    <div class="tab" data-cat="backpack" onclick="showCategory('backpack',this);document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'})">🎒 Backpack</div>
+    <div class="tab" data-cat="handbag" onclick="showCategory('handbag',this);document.getElementById('page-shop').scrollIntoView({behavior:'smooth',block:'start'})">👝 Handbag</div>
+  </div>
+
+  <!-- ======= PAGE: SHOP ======= -->
+  <div id="page-shop" class="page active">
+    <div id="shop-content"></div>
+  </div>
+
+  <!-- ======= PAGE: ORDER FORM ======= -->
+  <div id="page-order" class="page">
+    <div class="checkout-wrap">
+      <button class="back-link" onclick="openCartDrawer()">← Kembali ke Keranjang</button>
+
+      <!-- Step 1: Data Pemesan -->
+      <div class="checkout-step" id="form-step">
+        <div class="step-title"><span class="step-num">1</span> Data Pemesan</div>
+        <div class="form-group">
+          <label class="form-label">Nama Pemesan</label>
+          <input class="form-input" id="buyer-name" type="text" placeholder="Masukkan nama lengkap">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nomor Telepon</label>
+          <input class="form-input" id="buyer-phone" type="text" placeholder="Contoh: 081234567890" maxlength="14">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Alamat Lengkap</label>
+          <textarea class="form-textarea" id="buyer-address" placeholder="Jalan, No. Rumah, RT/RW, Kelurahan, Kecamatan, Kota, Kode Pos"></textarea>
+        </div>
+      </div>
+
+      <!-- Step 2: Pilih Kurir -->
+      <div class="checkout-step" id="kurir-step">
+        <div class="step-title"><span class="step-num">2</span> Pilih Kurir</div>
+        <div class="kurir-grid">
+          <div class="kurir-card" id="kurir-jne" onclick="selectKurir('jne',12000,'JNE Reguler','3-5 hari')">
+            <div class="kurir-name">JNE</div>
+            <div class="kurir-est">3–5 hari</div>
+            <div class="kurir-price">Rp 12.000</div>
+          </div>
+          <div class="kurir-card" id="kurir-sicepat" onclick="selectKurir('sicepat',15000,'SiCepat','2-3 hari')">
+            <div class="kurir-name">SiCepat</div>
+            <div class="kurir-est">2–3 hari</div>
+            <div class="kurir-price">Rp 15.000</div>
+          </div>
+          <div class="kurir-card" id="kurir-jnt" onclick="selectKurir('jnt',9000,'J&T Express','3-4 hari')">
+            <div class="kurir-name">J&T</div>
+            <div class="kurir-est">3–4 hari</div>
+            <div class="kurir-price">Rp 9.000</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-mini" id="order-mini"></div>
+      <button class="primary-btn" onclick="goToPayment()">Lanjut ke Pembayaran →</button>
+    </div>
+  </div>
+
+  <!-- ======= PAGE: PAYMENT ======= -->
+  <div id="page-payment" class="page">
+    <div class="checkout-wrap">
+      <button class="back-link" onclick="backToOrder()">← Kembali ke Data Pemesan</button>
+      <div class="checkout-step">
+        <div class="step-title"><span class="step-num">3</span> Metode Pembayaran</div>
+        <div class="pay-type-tabs">
+          <button class="pay-type-tab active" onclick="setPayType('bank',this)">Transfer Bank</button>
+          <button class="pay-type-tab" onclick="setPayType('ewallet',this)">E-Wallet</button>
+          <button class="pay-type-tab" onclick="setPayType('minimarket',this)">Minimarket</button>
+        </div>
+
+        <!-- BANK -->
+        <div id="block-bank" class="method-block active">
+          <div class="pay-method-grid">
+            <div class="pay-card" id="pc-bca" onclick="selectBank('bca',this)"><span class="pay-card-icon">🏦</span><div class="pay-card-name">BCA</div></div>
+            <div class="pay-card" id="pc-mandiri" onclick="selectBank('mandiri',this)"><span class="pay-card-icon">🏦</span><div class="pay-card-name">Mandiri</div></div>
+            <div class="pay-card" id="pc-bri" onclick="selectBank('bri',this)"><span class="pay-card-icon">🏦</span><div class="pay-card-name">BRI</div></div>
+          </div>
+          <div id="bank-form-fields" style="display:none">
+            <div class="info-box" id="bank-rekening-tujuan"></div>
+            <div class="form-group">
+              <label class="form-label">Nomor Rekening Pengirim</label>
+              <input class="form-input" id="bank-norek" type="text" placeholder="Masukkan nomor rekening Anda" maxlength="20">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nama Pemilik Rekening</label>
+              <input class="form-input" id="bank-nama" type="text" placeholder="Nama sesuai rekening">
+            </div>
+          </div>
+        </div>
+
+        <!-- E-WALLET -->
+        <div id="block-ewallet" class="method-block">
+          <div class="pay-method-grid">
+            <div class="pay-card" id="pc-ovo" onclick="selectEwallet('ovo',this)"><span class="pay-card-icon">💜</span><div class="pay-card-name">OVO</div></div>
+            <div class="pay-card" id="pc-dana" onclick="selectEwallet('dana',this)"><span class="pay-card-icon">💙</span><div class="pay-card-name">DANA</div></div>
+            <div class="pay-card" id="pc-gopay" onclick="selectEwallet('gopay',this)"><span class="pay-card-icon">💚</span><div class="pay-card-name">GoPay</div></div>
+          </div>
+          <div id="ewallet-form-fields" style="display:none">
+            <div class="info-box" id="ewallet-dest-info"></div>
+            <div class="form-group">
+              <label class="form-label">Nomor HP E-Wallet</label>
+              <input class="form-input" id="ewallet-phone" type="text" placeholder="Contoh: 081234567890" maxlength="14">
+            </div>
+          </div>
+        </div>
+
+        <!-- MINIMARKET -->
+        <div id="block-minimarket" class="method-block">
+          <p style="font-size:13px;color:var(--gray);margin-bottom:10px;">Pilih minimarket untuk pembayaran:</p>
+          <div class="pay-method-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="pay-card" id="pc-indomaret" onclick="selectMinimarket('indomaret',this)">
+              <span class="pay-card-icon">🏪</span>
+              <div class="pay-card-name">Indomaret</div>
+              <div style="font-size:10px;color:var(--gray)">Bayar di kasir</div>
+            </div>
+            <div class="pay-card" id="pc-alfamart" onclick="selectMinimarket('alfamart',this)">
+              <span class="pay-card-icon">🏬</span>
+              <div class="pay-card-name">Alfamart</div>
+              <div style="font-size:10px;color:var(--gray)">Bayar di kasir</div>
+            </div>
+          </div>
+          <div id="minimarket-code-wrap" style="display:none">
+            <div class="info-box" id="minimarket-info"></div>
+            <div style="background:var(--black);border-radius:10px;padding:16px;text-align:center;margin-top:4px;">
+              <div style="font-size:11px;letter-spacing:2px;color:var(--silver);margin-bottom:8px;text-transform:uppercase;">Kode Pembayaran</div>
+              <div id="minimarket-code" style="font-size:28px;font-weight:900;color:var(--accent);letter-spacing:6px;font-family:'DM Sans',sans-serif;"></div>
+              <div style="font-size:11px;color:var(--silver);margin-top:8px;">Tunjukkan kode ini ke kasir minimarket</div>
+            </div>
+            <div style="background:#fff8e8;border:1px solid var(--accent);border-radius:8px;padding:12px;margin-top:10px;font-size:12px;color:var(--black);line-height:1.7;">
+              <strong>Cara Bayar:</strong><br>
+              1. Datang ke <span id="mini-name-step"></span> terdekat<br>
+              2. Tunjukkan kode di atas ke kasir<br>
+              3. Bayar sejumlah <strong id="mini-total-step"></strong><br>
+              4. Simpan struk sebagai bukti pembayaran<br>
+              <span style="color:var(--gray);">⏰ Kode berlaku 24 jam</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-mini" id="order-mini-pay"></div>
+      <button class="primary-btn" onclick="processPayment()">✓ Konfirmasi & Bayar</button>
+    </div>
+  </div>
+
+  <!-- ======= PAGE: SUCCESS ======= -->
+  <div id="page-success" class="page">
+    <div class="success-wrap">
+      <div class="success-icon">✅</div>
+      <h2 class="success-title">Pembayaran Berhasil!</h2>
+      <p class="success-sub">Terima kasih telah berbelanja di <strong>Eira Bag Store</strong>.<br>Pesanan kamu sedang kami proses.</p>
+      <div class="tracking-box">
+        <h3>🚚 Pesanan Akan Segera Dikirim oleh Kurir</h3>
+        <p>Pesananmu sedang dikemas dan akan segera diserahkan kepada kurir pilihan. Nomor resi pengiriman akan dikirim melalui WhatsApp ke nomor yang kamu daftarkan.</p>
+      </div>
+      <div class="receipt-box" id="receipt-box"></div>
+      <button class="primary-btn" onclick="backToShop()">Belanja Lagi</button>
+    </div>
+  </div>
+
+  <!-- ======= CART DRAWER ======= -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeCartDrawer()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">🛒 Keranjang</div>
+      <button class="drawer-close" onclick="closeCartDrawer()">×</button>
+    </div>
+    <div class="drawer-body" id="drawer-body"></div>
+    <div class="drawer-footer" id="drawer-footer" style="display:none">
+      <div class="subtotal-row">
+        <span>Subtotal</span>
+        <span id="drawer-subtotal">Rp 0</span>
+      </div>
+      <button class="checkout-btn" onclick="goToOrderForm()">Lanjut Pemesanan →</button>
+    </div>
+  </div>
+
+  <!-- ======= PRODUCT MODAL ======= -->
+  <div class="modal-overlay" id="product-modal" onclick="closeModal(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModalDirect()">×</button>
+      <div class="modal-thumb" id="modal-thumb"></div>
+      <div class="modal-name" id="modal-name"></div>
+      <div class="modal-price-row" id="modal-price-row"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-stock" id="modal-stock"></div>
+      <div class="modal-qty-row">
+        <span style="font-size:13px;font-weight:700">Jumlah:</span>
+        <button class="modal-qty-btn" onclick="changeModalQty(-1)">−</button>
+        <span class="modal-qty-val" id="modal-qty-val">1</span>
+        <button class="modal-qty-btn" onclick="changeModalQty(1)">+</button>
+      </div>
+      <button class="modal-add" id="modal-add-btn" onclick="confirmAddToCart()">+ Tambah ke Keranjang</button>
+    </div>
+  </div>
+
+  <!-- ======= TOAST ======= -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js?v=2"></script>
+</body>
+</html>
